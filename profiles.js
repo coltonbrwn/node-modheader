@@ -31,11 +31,11 @@ function getHeadersForCustomProfile(profileTitle) {
   if (customProfiles && customProfiles[profileTitle]) {
     var profile = customProfiles[profileTitle];
     return [
-      'x-auth-params-uuid: ' + profile.uuid,
-      'x-auth-params-user-uuid: ' + profile.uuid,
-      'x-auth-params-token: ' + profile.token,
-      'x-auth-params-groups: merch-pbx-admin' 
-    ]
+      {name: 'x-auth-params-uuid', value: profile.uuid},
+      {name: 'x-auth-params-user-uuid', value: profile.uuid},
+      {name: 'x-auth-params-token', value: profile.token},
+      {name: 'x-auth-params-groups', value: 'merchp-pbx-admin'}
+    ];
   }
   throw notFoundError(profileTitle);
 }

@@ -4,7 +4,7 @@ var http = require('http');
 var httpProxy = require('http-proxy');
 
 function requestSummary(req) {
-  return req.url.substr(0, 40) + ' ..'
+  return '🍌  ' + req.url.substr(0, 40) + ' ...'
 }
 
 function createProxy(opts) {
@@ -15,7 +15,7 @@ function createProxy(opts) {
   var proxy = httpProxy.createProxyServer({});
 
   proxy.on('proxyReq', function(proxyReq, req, res, options) {
-    console.log('Adding Headers for: ' + requestSummary(req));
+    console.log(requestSummary(req));
     headers.forEach(function setHeader(header){
       proxyReq.setHeader(header.name, header.value);
     });
@@ -27,7 +27,7 @@ function createProxy(opts) {
     });
   });
 
-  console.log("listening on port " + port);
+  console.log("👂  listening on port " + port);
   server.listen(port);
 }
 
