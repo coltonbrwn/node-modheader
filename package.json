@@ -1,0 +1,14 @@
+{
+  "name": "node-modheader",
+  "version": "1.0.0",
+  "description": "command-line based modheader",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "coltonTB",
+  "license": "ISC",
+  "dependencies": {
+    "http-proxy": "^1.13.3"
+  }
+}

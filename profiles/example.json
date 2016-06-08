@@ -1,0 +1,6 @@
+{
+  "test-user": {
+    "uuid": "foobar",
+    "token": "baz"
+  }
+}
