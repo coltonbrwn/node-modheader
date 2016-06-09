@@ -1,11 +1,10 @@
 'use strict';
 
 var fs = require('fs');
-var modHeaderProfiles = requireIf('./profiles/modHeaderProfiles.json');
-var customProfiles = requireIf('./profiles/customProfiles.json');
 
 function requireIf(path) {
   if (fs.existsSync(path)) {
+    console.log('Found ' + path);
     return require(path);
   }
   return null;
@@ -15,32 +14,39 @@ function notFoundError(profile) {
  return new Error('Profile "' + profile + '" not found' );
 }
 
-function getHeadersForModheaderProfile(profileTitle) {
-  if (modHeaderProfiles && modHeaderProfiles.length) {
-    for (var i = 0; i < modHeaderProfiles.length; i++) {
-      var profile = modHeaderProfiles[i];
-      if (profile.title === profileTitle) {
-        return profile.headers;
-      }
-    }
+function getHeadersForModheaderProfile(profile) {
+  return profile.headers || [];
+}
+
+function getHeadersForCustomProfile(profile) {
+  return Object.keys(profile).map(function makeHeaders(key){
+    return {
+      name: key,
+      value: profile[key]
+    };
+  });
+}
+
+function getHeadersForProfile(profile) {
+  if (profile && profile.title && profile.headers) {
+    return getHeadersForModheaderProfile(profile);
+  } else if (profile) {
+    return getHeadersForCustomProfile(profile);
   }
   throw notFoundError(profileTitle);
 }
 
-function getHeadersForCustomProfile(profileTitle) {
-  if (customProfiles && customProfiles[profileTitle]) {
-    var profile = customProfiles[profileTitle];
-    return Object.keys(profile).map(function makeHeaders(key){
-      return {
-        name: key,
-        value: profile[key]
-      };
-    });
-  }
-  throw notFoundError(profileTitle);
+function getHeadersForUser(user) {
+  var profile = requireIf('./profiles/' + user + '.json');
+  return getHeadersForProfile(profile);
+}
+
+function getHeadersForFilename(filename) {
+  var profile = requireIf(filename);
+  return getHeadersForProfile(profile);
 }
 
 module.exports = {
-  getHeadersForCustomProfile: getHeadersForCustomProfile,
-  getHeadersForModheaderProfile: getHeadersForModheaderProfile
+  getHeadersForUser: getHeadersForUser,
+  getHeadersForFilename: getHeadersForFilename
 }

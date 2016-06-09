@@ -6,12 +6,13 @@ var proxy = require('./proxy');
 var args = process.argv;
 var headersForProfile = [];
 
-var MODHEADER_ARG = '-m';
+var FILEPATH_ARG = '-f';
 var PROFILE_ARG = '-u';
 var TARGET_PORT_ARG = '-t';
 var LISTEN_PORT_ARG = '-p';
 
-var profileName = getArgValue(PROFILE_ARG) || getArgValue(MODHEADER_ARG);
+var profileName = getArgValue(PROFILE_ARG);
+var fileName = getArgValue(FILEPATH_ARG);
 var targetPort = getArgValue(TARGET_PORT_ARG);
 var listenPort = getArgValue(LISTEN_PORT_ARG);
 
@@ -22,14 +23,20 @@ function getArgValue(argKey) {
   }
 }
 
-var headersForProfile = profiles.getHeadersForModheaderProfile(profileName);
-if (headersForProfile.length === 0) {
+var headers = [];
+if (profileName) {
+  headers = profiles.getHeadersForUser(profileName);
+} else if (fileName) {
+  headers = profiles.getHeadersForFilename(fileName);
+}
+
+if (headers.length === 0) {
   console.warn('WARN: no additional headers will be sent');
 }
 
 proxy.create({
   user: profileName,
-  headers: headersForProfile,
+  headers: headers,
   targetPort: targetPort,
   listenPort: listenPort
 });
