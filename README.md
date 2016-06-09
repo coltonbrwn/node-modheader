@@ -24,7 +24,7 @@ npm install node-modheader
 
 ### Option 3 - Custom json file
 1. Save a json object somehwere
-2 `node node-modheader -f ../path/to/your/file.json`
+2. `node node-modheader -f ../path/to/your/file.json`
 
 
 ## 🍌 CLI Options
