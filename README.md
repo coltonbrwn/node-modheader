@@ -8,7 +8,7 @@ git clone git@github.com:coltonTB/node-modheader.git
 npm install node-modheader
 ```
 
-### Option 1 - Import header rules from modheader chrome extension
+### Option 1 - Import header rules from [modheader](https://chrome.google.com/webstore/detail/modheader/idgpnmonknjnojddfkpgkljpfnnfcklj?hl=en) chrome extension
 
 1. Click on the modheader browser extension
 2. Click on the button with three vertical buttons in the top right
