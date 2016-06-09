@@ -31,7 +31,10 @@ function getHeadersForCustomProfile(profileTitle) {
   if (customProfiles && customProfiles[profileTitle]) {
     var profile = customProfiles[profileTitle];
     return Object.keys(profile).map(function makeHeaders(key){
-      return key + ": " + profile[key];
+      return {
+        name: key,
+        value: profile[key]
+      };
     });
   }
   throw notFoundError(profileTitle);
