@@ -1,6 +1,6 @@
 {
   "test-user": {
-    "uuid": "foobar",
-    "token": "baz"
+    "x-origin": "foobar",
+    "x-user-id": "baz"
   }
 }

@@ -5,21 +5,31 @@ var proxy = require('./proxy');
 
 var args = process.argv;
 var headersForProfile = [];
-var MODHEADER_ARG = '-m';
-var PROFILE_ARG = '-p';
 
-if (args.indexOf(MODHEADER_ARG) > 0) {
-  var profileTitle = args[args.indexOf(MODHEADER_ARG) + 1];
-  headersForProfile = profiles.getHeadersForModheaderProfile(profileTitle);
-} else if (args.indexOf(PROFILE_ARG) > 0) {
-  var profileTitle = args[args.indexOf(PROFILE_ARG) + 1];
-  headersForProfile = profiles.getHeadersForCustomProfile(profileTitle);
+var MODHEADER_ARG = '-m';
+var PROFILE_ARG = '-u';
+var TARGET_PORT_ARG = '-t';
+var LISTEN_PORT_ARG = '-p';
+
+var profileName = getArgValue(PROFILE_ARG) || getArgValue(MODHEADER_ARG);
+var targetPort = getArgValue(TARGET_PORT_ARG);
+var listenPort = getArgValue(LISTEN_PORT_ARG);
+
+function getArgValue(argKey) {
+  var args = process.argv;
+  if (args.indexOf(argKey) > 0) {
+    return args[args.indexOf(argKey) + 1];
+  }
 }
 
+var headersForProfile = profiles.getHeadersForModheaderProfile(profileName);
 if (headersForProfile.length === 0) {
   console.warn('WARN: no additional headers will be sent');
 }
 
 proxy.create({
-  headers: headersForProfile
+  user: profileName,
+  headers: headersForProfile,
+  targetPort: targetPort,
+  listenPort: listenPort
 });

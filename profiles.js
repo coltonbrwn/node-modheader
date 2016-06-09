@@ -30,12 +30,9 @@ function getHeadersForModheaderProfile(profileTitle) {
 function getHeadersForCustomProfile(profileTitle) {
   if (customProfiles && customProfiles[profileTitle]) {
     var profile = customProfiles[profileTitle];
-    return [
-      {name: 'x-auth-params-uuid', value: profile.uuid},
-      {name: 'x-auth-params-user-uuid', value: profile.uuid},
-      {name: 'x-auth-params-token', value: profile.token},
-      {name: 'x-auth-params-groups', value: 'merchp-pbx-admin'}
-    ];
+    return Object.keys(profile).map(function makeHeaders(key){
+      return key + ": " + profile[key];
+    });
   }
   throw notFoundError(profileTitle);
 }
