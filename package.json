@@ -1,6 +1,6 @@
 {
   "name": "node-modheader",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "command-line based modheader",
   "main": "index.js",
   "scripts": {
