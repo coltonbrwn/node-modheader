@@ -1,5 +1,6 @@
 'use strict';
 
+var getIp = require('./get-ip');
 var profiles = require('./profiles');
 var proxy = require('./proxy');
 

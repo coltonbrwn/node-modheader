@@ -1,9 +1,13 @@
 'use strict';
 
+var getIp = require('./get-ip');
 var http = require('http');
 var httpProxy = require('http-proxy');
+var titleLine = require('./title-line');
 
-var URL_MAX_LEN = 40;
+var DEFAULT_LISTEN_PORT = 4750;
+var DEFAULT_TARGET_PORT = 8080;
+var URL_MAX_LEN = 60;
 
 function requestSummary(req) {
   var url = req.url;
@@ -16,8 +20,8 @@ function requestSummary(req) {
 function createProxy(opts) {
   var user = opts.user;
   var headers = opts.headers;
-  var port = opts.listenPort || 4750;
-  var targetPort = opts.targetPort || 8080;
+  var port = opts.listenPort || DEFAULT_LISTEN_PORT;
+  var targetPort = opts.targetPort || DEFAULT_TARGET_PORT;
 
   var target = 'http://127.0.0.1:' + targetPort;
   var proxy = httpProxy.createProxyServer({});
@@ -35,12 +39,23 @@ function createProxy(opts) {
     });
   });
 
-  console.log("🙇  User is '" + user + "'");
-  console.log("👾  Proxying requests to " + target);
-  console.log("👂  listening on port " + port);
-  console.log(" ... ");
+  titleLine();
+
+  if (user) {
+    console.log("🙇  User is '" + user + "'");
+  }
+
+  getIp(function(ipAddress) {
+    console.log("👂  Proxying requests ...");
+    console.log("   http://" + ipAddress + ":" + port + "  ▶ ▶ ▶  " + target);
+    console.log("");
+  });
 
   server.listen(port);
+}
+
+function printFullUrl(port) {
+
 }
 
 module.exports = {

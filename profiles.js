@@ -4,7 +4,7 @@ var fs = require('fs');
 
 function requireIf(path) {
   if (fs.existsSync(path)) {
-    console.log('Found ' + path);
+    console.log('🔍  Found ' + path);
     return require(path);
   }
   return null;
