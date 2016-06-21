@@ -1,6 +1,5 @@
 'use strict';
 
-var getIp = require('./get-ip');
 var http = require('http');
 var httpProxy = require('http-proxy');
 var titleLine = require('./title-line');
@@ -39,23 +38,13 @@ function createProxy(opts) {
     });
   });
 
-  titleLine();
-
-  if (user) {
-    console.log("🙇  User is '" + user + "'");
-  }
-
-  getIp(function(ipAddress) {
-    console.log("👂  Proxying requests ...");
-    console.log("   http://" + ipAddress + ":" + port + "  ▶ ▶ ▶  " + target);
-    console.log("");
+  server.listen(port, function() {
+    titleLine({
+      port: port,
+      target: target,
+      user: user
+    });
   });
-
-  server.listen(port);
-}
-
-function printFullUrl(port) {
-
 }
 
 module.exports = {
