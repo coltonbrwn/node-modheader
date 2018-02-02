@@ -1,4 +1,4 @@
-#! /usr/bin/env node:wq
+#! /usr/bin/env node
 
 'use strict';
 
