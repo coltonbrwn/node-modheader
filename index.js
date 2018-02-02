@@ -1,3 +1,5 @@
+#!/bin/bash
+
 'use strict';
 
 var getIp = require('./get-ip');
